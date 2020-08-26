@@ -1,11 +1,11 @@
 package com.dutra.pontointeligente.dtos
 
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Employee
 import org.hibernate.validator.constraints.Length
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
 
-data class FuncionarioDto (
+data class EmployeeDto (
     @field:NotEmpty(message = "Nome deve conter entre 3 e 200 caracteres.")
     @field:Length(min = 3, max = 200, message = "Nome deve conter entre 3 e 200 caracteres.")
     val nome: String = "",
@@ -22,9 +22,9 @@ data class FuncionarioDto (
     val id: String? = null
 ) {
   companion object Mappers {
-    fun paraFuncionarioDto(funcionario: Funcionario): FuncionarioDto {
-      return funcionario.run {
-        FuncionarioDto(
+    fun toEmployeeDto(employee: Employee): EmployeeDto {
+      return employee.run {
+        EmployeeDto(
           nome = nome,
           email = email,
           senha = "",

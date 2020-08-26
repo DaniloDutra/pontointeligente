@@ -1,8 +1,8 @@
 package com.dutra.pontointeligente.dtos
 
 
-import com.dutra.pontointeligente.documents.Empresa
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Company
+import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.enums.PerfilEnum
 import com.dutra.pontointeligente.utils.SenhaUtils
 import org.hibernate.validator.constraints.Length
@@ -39,36 +39,36 @@ data class CadastroPJDto (
     val id: String? = null
 ) {
   companion object Mappers {
-    fun paraEmpresa(cadastroPJDto: CadastroPJDto): Empresa {
+    fun toCompany(cadastroPJDto: CadastroPJDto): Company {
       return cadastroPJDto.run {
-        Empresa(
+        Company(
           razaoSocial = razaoSocial,
           cnpj = cnpj
         )
       }
     }
-    fun paraFuncionario(cadastroPJDto: CadastroPJDto): Funcionario {
+    fun toEmployee(cadastroPJDto: CadastroPJDto): Employee {
       return cadastroPJDto.run {
-        Funcionario(
+        Employee(
           nome = nome,
           email = email,
           senha = SenhaUtils().gerarBcrypt(senha),
           cpf = cpf,
           perfil = PerfilEnum.ROLE_ADMIN,
-          empresaId = id.toString()
+          companyId = id.toString()
         )
       }
     }
-    fun paraCadastroPJDTO(funcionario: Funcionario, empresa: Empresa): CadastroPJDto {
-      return funcionario.run {
+    fun toCadastroPJDTO(employee: Employee, company: Company): CadastroPJDto {
+      return employee.run {
         CadastroPJDto(
           nome = nome,
           email = email,
           senha = "",
           cpf = cpf,
           id = id,
-          cnpj = empresa.cnpj,
-          razaoSocial = empresa.razaoSocial
+          cnpj = company.cnpj,
+          razaoSocial = company.razaoSocial
         )
       }
     }

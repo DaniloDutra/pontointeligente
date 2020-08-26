@@ -1,10 +1,10 @@
 package com.dutra.pontointeligente
 
-import com.dutra.pontointeligente.documents.Empresa
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Company
+import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.enums.PerfilEnum
-import com.dutra.pontointeligente.repositories.EmpresaRepository
-import com.dutra.pontointeligente.repositories.FuncionarioRepository
+import com.dutra.pontointeligente.repositories.CompanyRepository
+import com.dutra.pontointeligente.repositories.EmployeeRepository
 import com.dutra.pontointeligente.repositories.LancamentoRepository
 import com.dutra.pontointeligente.utils.SenhaUtils
 import org.springframework.boot.CommandLineRunner

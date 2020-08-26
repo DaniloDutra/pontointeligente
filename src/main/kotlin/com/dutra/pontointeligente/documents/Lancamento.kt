@@ -9,7 +9,7 @@ import java.util.*
 data class Lancamento (
   val data: Date,
   val tipo: TipoEnum,
-  val funcionarioId: String,
+  val employeeId: String,
   val descricao: String? = "",
   val localizacao: String? = "",
   @Id val id: String? = null

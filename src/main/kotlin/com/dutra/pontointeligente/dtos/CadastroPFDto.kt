@@ -1,7 +1,7 @@
 package com.dutra.pontointeligente.dtos
 
-import com.dutra.pontointeligente.documents.Empresa
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Company
+import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.enums.PerfilEnum
 import com.dutra.pontointeligente.utils.SenhaUtils
 import org.hibernate.validator.constraints.Length
@@ -31,7 +31,7 @@ data class CadastroPFDto (
     @field:CNPJ(message="CNPJ inválido.")
     val cnpj: String = "",
 
-    val empresaId: String = "",
+    val companyId: String = "",
 
     val valorHora: String? = null,
     val qtdHorasTrabalhoDia: String? = null,
@@ -39,15 +39,15 @@ data class CadastroPFDto (
     val id: String? = null
 ) {
   companion object Mappers {
-    fun paraFuncionario(cadastroPFDto: CadastroPFDto, empresa: Empresa): Funcionario {
+    fun toEmployee(cadastroPFDto: CadastroPFDto, company: Company): Employee {
       return cadastroPFDto.run {
-        Funcionario(
+        Employee(
           nome = nome,
           email = email,
           senha = SenhaUtils().gerarBcrypt(senha),
           cpf = cpf,
           perfil = PerfilEnum.ROLE_USUARIO,
-          empresaId = empresa.id.toString(),
+          companyId = company.id.toString(),
           valorHora = valorHora?.toDouble(),
           qtdHorasTrabalhoDia = qtdHorasTrabalhoDia?.toFloat(),
           qtdHorasAlmoco = qtdHorasAlmoco?.toFloat(),
@@ -55,15 +55,15 @@ data class CadastroPFDto (
         )
       }
     }
-    fun paraCadastroPFDTO(funcionario: Funcionario, empresa: Empresa): CadastroPFDto {
-      return funcionario.run {
+    fun toCadastroPFDTO(employee: Employee, company: Company): CadastroPFDto {
+      return employee.run {
         CadastroPFDto(
             nome = nome,
             email = email,
             senha = "",
             cpf = cpf,
-            cnpj = empresa.cnpj,
-            empresaId = empresa.id.toString(),
+            cnpj = company.cnpj,
+            companyId = company.id.toString(),
             valorHora = valorHora.toString(),
             qtdHorasTrabalhoDia = qtdHorasTrabalhoDia.toString(),
             qtdHorasAlmoco = qtdHorasAlmoco.toString(),

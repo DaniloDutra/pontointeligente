@@ -1,18 +1,18 @@
 package com.dutra.pontointeligente.security
 
-import com.dutra.pontointeligente.services.FuncionarioService
+import com.dutra.pontointeligente.services.EmployeeService
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class FuncionarioDetailsService(val funcionarioService: FuncionarioService) : UserDetailsService {
+class EmployeeDetailsService(val employeeService: EmployeeService) : UserDetailsService {
   override fun loadUserByUsername(username: String?): UserDetails {
     if (username != null) {
-      val funcionario = funcionarioService.buscarPorEmail(username)
-      if (funcionario != null) {
-        return FuncionarioPrincipal(funcionario)
+      val employee = employeeService.buscarPorEmail(username)
+      if (employee != null) {
+        return EmployeePrincipal(employee)
       }
     }
     throw UsernameNotFoundException(username)

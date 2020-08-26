@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
-    val funcionarioDetailsService: FuncionarioDetailsService) : WebSecurityConfigurerAdapter() {
+    val employeeDetailsService: EmployeeDetailsService) : WebSecurityConfigurerAdapter() {
 
   override fun configure(auth: AuthenticationManagerBuilder?) {
     auth?.authenticationProvider(authenticationProvider())
@@ -37,7 +37,7 @@ class SecurityConfig(
   @Bean
   fun authenticationProvider(): DaoAuthenticationProvider {
     val authProvider = DaoAuthenticationProvider()
-    authProvider.setUserDetailsService(funcionarioDetailsService)
+    authProvider.setUserDetailsService(employeeDetailsService)
     authProvider.setPasswordEncoder(encoder())
     return authProvider
   }

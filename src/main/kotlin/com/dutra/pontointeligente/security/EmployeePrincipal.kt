@@ -1,24 +1,24 @@
 package com.dutra.pontointeligente.security
 
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Employee
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class FuncionarioPrincipal(val funcionario: Funcionario) : UserDetails {
+class EmployeePrincipal(val employee: Employee) : UserDetails {
   override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
     val authorities = mutableListOf<GrantedAuthority>()
-    authorities.add(SimpleGrantedAuthority(funcionario.perfil.toString()))
+    authorities.add(SimpleGrantedAuthority(employee.perfil.toString()))
     return authorities
   }
 
   override fun isEnabled(): Boolean = true
 
-  override fun getUsername(): String = funcionario.email
+  override fun getUsername(): String = employee.email
 
   override fun isCredentialsNonExpired(): Boolean = true
 
-  override fun getPassword(): String = funcionario.senha
+  override fun getPassword(): String = employee.senha
 
   override fun isAccountNonExpired(): Boolean = true
 

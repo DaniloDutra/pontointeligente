@@ -1,16 +1,16 @@
 package com.dutra.pontointeligente.dtos
 
-import com.dutra.pontointeligente.documents.Empresa
+import com.dutra.pontointeligente.documents.Company
 
-data class EmpresaDto (
+data class CompanyDto (
     val razaoSocial: String,
     val cnpj: String,
     val id: String?
 ) {
   companion object Mappers {
-    fun paraEmpresaDto(empresa: Empresa): EmpresaDto {
-      return empresa.run {
-        EmpresaDto(
+    fun toCompanyDto(company: Company): CompanyDto {
+      return company.run {
+        CompanyDto(
           razaoSocial = razaoSocial,
           cnpj = cnpj,
           id = id

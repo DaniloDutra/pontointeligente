@@ -1,6 +1,6 @@
 package com.dutra.pontointeligente.service
 
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.documents.Lancamento
 import com.dutra.pontointeligente.enums.TipoEnum
 import com.dutra.pontointeligente.repositories.LancamentoRepository
@@ -34,7 +34,7 @@ class LancamentoServiceTest {
   @BeforeEach
   @Throws(Exception::class)
   fun setUp() {
-    BDDMockito.given<Page<Lancamento>>(lancamentoRepository.findByFuncionarioId(id, PageRequest.of(0, 10)))
+    BDDMockito.given<Page<Lancamento>>(lancamentoRepository.findByEmployeeId(id, PageRequest.of(0, 10)))
         .willReturn(PageImpl(ArrayList<Lancamento>()))
     BDDMockito.given(lancamentoRepository.findById(id)).willReturn(Optional.of(lancamento()))
     BDDMockito.given(lancamentoRepository.save(Mockito.any(Lancamento::class.java))).willReturn(lancamento())
@@ -44,8 +44,8 @@ class LancamentoServiceTest {
       Lancamento(Date(), TipoEnum.INICIO_TRABALHO, id)
 
   @Test
-  fun testBuscarLancamentoPorFuncionario() {
-    val lancamento: Page<Lancamento>? = this.lancamentoService?.buscarPorFuncionarioId(id, PageRequest.of(0, 10))
+  fun testBuscarLancamentoPorEmployee() {
+    val lancamento: Page<Lancamento>? = this.lancamentoService?.buscarPorEmployeeId(id, PageRequest.of(0, 10))
     Assertions.assertNotNull(lancamento)
   }
 

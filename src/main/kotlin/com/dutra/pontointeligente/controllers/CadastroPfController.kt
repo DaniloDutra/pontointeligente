@@ -1,11 +1,11 @@
 package com.dutra.pontointeligente.controllers
 
-import com.dutra.pontointeligente.documents.Empresa
-import com.dutra.pontointeligente.documents.Funcionario
+import com.dutra.pontointeligente.documents.Company
+import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.dtos.CadastroPFDto
 import com.dutra.pontointeligente.response.Response
-import com.dutra.pontointeligente.services.EmpresaService
-import com.dutra.pontointeligente.services.FuncionarioService
+import com.dutra.pontointeligente.services.CompanyService
+import com.dutra.pontointeligente.services.EmployeeService
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
@@ -17,43 +17,43 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/cadastrar-pf")
-class CadastroPfController( val empresaService: EmpresaService,
-                            val funcionarioService: FuncionarioService) {
+class CadastroPfController( val companyService: CompanyService,
+                            val employeeService: EmployeeService) {
 
   @PostMapping
   fun cadastrar(@Valid @RequestBody cadastroPFDto: CadastroPFDto,
                 result: BindingResult): ResponseEntity<Response<CadastroPFDto>> {
     val response = Response<CadastroPFDto>()
 
-    val empresa = empresaService.buscarPorCnpj(cadastroPFDto.cnpj)
-    validarDadosExistentes(cadastroPFDto, empresa, result)
+    val company = companyService.buscarPorCnpj(cadastroPFDto.cnpj)
+    validarDadosExistentes(cadastroPFDto, company, result)
 
     if (result.hasErrors()) {
       for (erro in result.allErrors) response.erros.add(erro.defaultMessage!!)
       return ResponseEntity.badRequest().body(response)
     }
 
-    val buildFuncionario = CadastroPFDto.paraFuncionario(cadastroPFDto, empresa!!)
-    val funcionario = funcionarioService.persistir(buildFuncionario)
+    val buildEmployee = CadastroPFDto.toEmployee(cadastroPFDto, company!!)
+    val employee = employeeService.persistir(buildEmployee)
 
-    response.data = CadastroPFDto.paraCadastroPFDTO(funcionario, empresa)
+    response.data = CadastroPFDto.toCadastroPFDTO(employee, company)
     return ResponseEntity.ok(response)
   }
 
-  private fun validarDadosExistentes(cadastroPFDto: CadastroPFDto, empresa: Empresa?,
+  private fun validarDadosExistentes(cadastroPFDto: CadastroPFDto, company: Company?,
                                      result: BindingResult) {
-    if (empresa == null) {
-      result.addError(ObjectError("empresa", "Empresa não cadastrada."))
+    if (company == null) {
+      result.addError(ObjectError("company", "Company não cadastrada."))
     }
 
-    val funcionarioCpf: Funcionario? = funcionarioService.buscarPorCpf(cadastroPFDto.cpf)
-    if (funcionarioCpf != null) {
-      result.addError(ObjectError("funcionario", "CPF já existente."))
+    val employeeCpf: Employee? = employeeService.buscarPorCpf(cadastroPFDto.cpf)
+    if (employeeCpf != null) {
+      result.addError(ObjectError("employee", "CPF já existente."))
     }
 
-    val funcionarioEmail: Funcionario? = funcionarioService.buscarPorEmail(cadastroPFDto.email)
-    if (funcionarioEmail != null) {
-      result.addError(ObjectError("funcionario", "Email já existente."))
+    val employeeEmail: Employee? = employeeService.buscarPorEmail(cadastroPFDto.email)
+    if (employeeEmail != null) {
+      result.addError(ObjectError("employee", "Email já existente."))
     }
   }
 }
