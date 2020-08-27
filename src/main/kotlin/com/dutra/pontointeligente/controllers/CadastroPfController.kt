@@ -25,7 +25,7 @@ class CadastroPfController( val companyService: CompanyService,
                 result: BindingResult): ResponseEntity<Response<CadastroPFDto>> {
     val response = Response<CadastroPFDto>()
 
-    val company = companyService.buscarPorCnpj(cadastroPFDto.cnpj)
+    val company = companyService.searchByCnpj(cadastroPFDto.cnpj)
     validarDadosExistentes(cadastroPFDto, company, result)
 
     if (result.hasErrors()) {
@@ -46,12 +46,12 @@ class CadastroPfController( val companyService: CompanyService,
       result.addError(ObjectError("company", "Company não cadastrada."))
     }
 
-    val employeeCpf: Employee? = employeeService.buscarPorCpf(cadastroPFDto.cpf)
+    val employeeCpf: Employee? = employeeService.searchByCpf(cadastroPFDto.cpf)
     if (employeeCpf != null) {
       result.addError(ObjectError("employee", "CPF já existente."))
     }
 
-    val employeeEmail: Employee? = employeeService.buscarPorEmail(cadastroPFDto.email)
+    val employeeEmail: Employee? = employeeService.searchByEmail(cadastroPFDto.email)
     if (employeeEmail != null) {
       result.addError(ObjectError("employee", "Email já existente."))
     }

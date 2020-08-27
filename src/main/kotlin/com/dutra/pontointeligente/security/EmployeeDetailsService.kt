@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class EmployeeDetailsService(val employeeService: EmployeeService) : UserDetailsService {
   override fun loadUserByUsername(username: String?): UserDetails {
     if (username != null) {
-      val employee = employeeService.buscarPorEmail(username)
+      val employee = employeeService.searchByEmail(username)
       if (employee != null) {
         return EmployeePrincipal(employee)
       }

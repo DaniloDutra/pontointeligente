@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 class CompanyController(val companyService: CompanyService) {
 
   @GetMapping("/cnpj/{cnpj}")
-  fun buscarPorCnpj(@PathVariable("cnpj") cnpj: String): ResponseEntity<Response<CompanyDto>> {
+  fun searchByCnpj(@PathVariable("cnpj") cnpj: String): ResponseEntity<Response<CompanyDto>> {
     val response: Response<CompanyDto> = Response<CompanyDto>()
-    val company: Company? = companyService.buscarPorCnpj(cnpj)
+    val company: Company? = companyService.searchByCnpj(cnpj)
 
     if (company == null) {
       response.erros.add("Company não encontrada para o CPNJ: ${cnpj}")

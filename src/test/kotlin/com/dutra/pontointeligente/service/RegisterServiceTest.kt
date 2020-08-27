@@ -44,14 +44,14 @@ class RegisterServiceTest {
       Register(Date(), TipoEnum.INICIO_TRABALHO, id)
 
   @Test
-  fun testBuscarRegisterPorEmployee() {
-    val register: Page<Register>? = this.registerService?.buscarPorEmployeeId(id, PageRequest.of(0, 10))
+  fun testBuscarRegisterByEmployee() {
+    val register: Page<Register>? = this.registerService?.searchByEmployeeId(id, PageRequest.of(0, 10))
     Assertions.assertNotNull(register)
   }
 
   @Test
-  fun testBuscarRegisterPorId() {
-    val register: Register? = this.registerService?.buscarPorId(id)
+  fun testBuscarRegisterById() {
+    val register: Register? = this.registerService?.searchById(id)
     Assertions.assertNotNull(register)
   }
 

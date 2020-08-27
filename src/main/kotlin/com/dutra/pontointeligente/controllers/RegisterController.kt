@@ -28,7 +28,7 @@ class RegisterController(val registerService: RegisterService,
   private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
   @Value("\${paginacao.qtd_por_pagina}")
-  val qtdPorPagina: Int = 15
+  val qtdByPagina: Int = 15
 
   @PostMapping
   fun adicionar(@Valid @RequestBody registerDto: RegisterDto,
@@ -48,9 +48,9 @@ class RegisterController(val registerService: RegisterService,
   }
 
   @GetMapping("/{id}")
-  fun listarPorId(@PathVariable("id") id: String): ResponseEntity<Response<RegisterDto>> {
+  fun listarById(@PathVariable("id") id: String): ResponseEntity<Response<RegisterDto>> {
     val response: Response<RegisterDto> = Response<RegisterDto>()
-    val register: Register? = registerService.buscarPorId(id)
+    val register: Register? = registerService.searchById(id)
 
     if (register == null) {
       response.erros.add("Lançamento não encontrado para o id $id")
@@ -62,7 +62,7 @@ class RegisterController(val registerService: RegisterService,
   }
 
   @GetMapping("/employee/{employeeId}")
-  fun listarPorEmployeeId(@PathVariable("employeeId") employeeId: String,
+  fun listarByEmployeeId(@PathVariable("employeeId") employeeId: String,
                              @RequestParam(value = "pag", defaultValue = "0") pag: Int,
                              @RequestParam(value = "ord", defaultValue = "id") ord: String,
                              @RequestParam(value = "dir", defaultValue = "DESC") dir: String):
@@ -70,9 +70,9 @@ class RegisterController(val registerService: RegisterService,
 
     val response: Response<Page<RegisterDto>> = Response<Page<RegisterDto>>()
 
-    val pageRequest: PageRequest = PageRequest.of(pag, qtdPorPagina, Sort.Direction.valueOf(dir), ord)
+    val pageRequest: PageRequest = PageRequest.of(pag, qtdByPagina, Sort.Direction.valueOf(dir), ord)
     val registers: Page<Register> =
-        registerService.buscarPorEmployeeId(employeeId, pageRequest)
+        registerService.searchByEmployeeId(employeeId, pageRequest)
 
     val registersDto: Page<RegisterDto> =
         registers.map { converterRegisterDto(it) }
@@ -102,17 +102,17 @@ class RegisterController(val registerService: RegisterService,
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAnyRole('ADMIN')")
-  fun remover(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
+  fun remove(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
 
     val response: Response<String> = Response<String>()
-    val register: Register? = registerService.buscarPorId(id)
+    val register: Register? = registerService.searchById(id)
 
     if (register == null) {
-      response.erros.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+      response.erros.add("Erro ao remove lançamento. Registro não encontrado para o id $id")
       return ResponseEntity.badRequest().body(response)
     }
 
-    registerService.remover(id)
+    registerService.remove(id)
     return ResponseEntity.ok(Response<String>())
   }
 
@@ -123,7 +123,7 @@ class RegisterController(val registerService: RegisterService,
       return
     }
 
-    val employee: Employee? = employeeService.buscarPorId(registerDto.employeeId)
+    val employee: Employee? = employeeService.searchById(registerDto.employeeId)
     if (employee == null) {
       result.addError(ObjectError("employee",
           "Funcionário não encontrado. ID inexistente."));
@@ -138,7 +138,7 @@ class RegisterController(val registerService: RegisterService,
   private fun converterDtoParaRegister(registerDto: RegisterDto,
                                          result: BindingResult): Register {
     if (registerDto.id != null) {
-      val lanc: Register? = registerService.buscarPorId(registerDto.id!!)
+      val lanc: Register? = registerService.searchById(registerDto.id!!)
       if (lanc == null) result.addError(ObjectError("register",
           "Lançamento não encontrado."))
     }

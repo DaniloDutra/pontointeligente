@@ -32,8 +32,8 @@ class CompanyServiceTest {
   fun company(): Company = Company("Dutra S.A", CNPJ, "1")
 
   @Test
-  fun testBuscarCompanyPorCnpj() {
-    val company: Company? = companyService?.buscarPorCnpj(CNPJ)
+  fun testBuscarCompanyByCnpj() {
+    val company: Company? = companyService?.searchByCnpj(CNPJ)
     Assertions.assertNotNull(company)
   }
 

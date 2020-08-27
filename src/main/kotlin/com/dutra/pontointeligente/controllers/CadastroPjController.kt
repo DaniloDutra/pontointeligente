@@ -44,17 +44,17 @@ class CadastroPjController(val employeeService: EmployeeService,
   }
 
   private fun validarDadosExistentes(cadastroPJDto: CadastroPJDto, result: BindingResult) {
-    val company: Company? = companyService.buscarPorCnpj(cadastroPJDto.cnpj)
+    val company: Company? = companyService.searchByCnpj(cadastroPJDto.cnpj)
     if (company != null) {
       result.addError(ObjectError("company", "Company já existente."))
     }
 
-    val employeeCpf: Employee? = employeeService.buscarPorCpf(cadastroPJDto.cpf)
+    val employeeCpf: Employee? = employeeService.searchByCpf(cadastroPJDto.cpf)
     if (employeeCpf != null) {
       result.addError(ObjectError("employee", "CPF já existente."))
     }
 
-    val employeeEmail: Employee? = employeeService.buscarPorEmail(cadastroPJDto.email)
+    val employeeEmail: Employee? = employeeService.searchByEmail(cadastroPJDto.email)
     if (employeeEmail != null) {
       result.addError(ObjectError("employee", "Email já existente."))
     }

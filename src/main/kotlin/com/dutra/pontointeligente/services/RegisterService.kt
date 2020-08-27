@@ -6,11 +6,11 @@ import org.springframework.data.domain.PageRequest
 
 interface RegisterService {
 
-  fun buscarPorEmployeeId(employeeId: String, pageRequest: PageRequest): Page<Register>
+  fun searchByEmployeeId(employeeId: String, pageRequest: PageRequest): Page<Register>
 
-  fun buscarPorId(id: String): Register?
+  fun searchById(id: String): Register?
 
   fun persistir(register: Register): Register
 
-  fun remover(id: String)
+  fun remove(id: String)
 }

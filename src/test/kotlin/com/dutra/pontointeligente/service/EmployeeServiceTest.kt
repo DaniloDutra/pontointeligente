@@ -46,20 +46,20 @@ class EmployeeServiceTest {
   }
 
   @Test
-  fun testBuscarEmployeePorCpf() {
-    val employee: Employee? = this.employeeService?.buscarPorCpf(cpf)
+  fun testBuscarEmployeeByCpf() {
+    val employee: Employee? = this.employeeService?.searchByCpf(cpf)
     Assertions.assertNotNull(employee)
   }
 
   @Test
-  fun testBuscarEmployeePorEmail() {
-    val employee: Employee? = this.employeeService?.buscarPorEmail(email)
+  fun testBuscarEmployeeByEmail() {
+    val employee: Employee? = this.employeeService?.searchByEmail(email)
     Assertions.assertNotNull(employee)
   }
 
   @Test
-  fun testBuscarEmployeePorId() {
-    val employee: Employee? = this.employeeService?.buscarPorEmail(email)
+  fun testBuscarEmployeeById() {
+    val employee: Employee? = this.employeeService?.searchByEmail(email)
     Assertions.assertNotNull(employee)
   }
 }

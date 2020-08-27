@@ -52,14 +52,14 @@ class RegisterControllerTest(@Autowired val mvc: MockMvc) {
   @Test
   @Throws(Exception::class)
   @WithMockUser
-  fun testCadastrarRegister() {
-    val register: Register = obterDadosRegister()
+  fun testCreateRegister() {
+    val register: Register = getDadosRegister()
 
-    every { employeeMockkBean.buscarPorId(idEmployee) } returns employee()
+    every { employeeMockkBean.searchById(idEmployee) } returns employee()
     every { registerMockk.persistir(register) } returns register
 
     mvc.perform(MockMvcRequestBuilders.post(urlBase)
-        .content(obterJsonRequisicaoPost())
+        .content(getJsonRequestPost())
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk)
@@ -72,11 +72,11 @@ class RegisterControllerTest(@Autowired val mvc: MockMvc) {
   @Test
   @Throws(Exception::class)
   @WithMockUser
-  fun testCadastrarRegisterEmployeeIdInvalido() {
-    every { employeeMockkBean.buscarPorId(idEmployee) } returns null
+  fun testCreateRegisterEmployeeIdInvalido() {
+    every { employeeMockkBean.searchById(idEmployee) } returns null
 
     mvc.perform(MockMvcRequestBuilders.post(urlBase)
-        .content(obterJsonRequisicaoPost())
+        .content(getJsonRequestPost())
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest())
@@ -88,9 +88,9 @@ class RegisterControllerTest(@Autowired val mvc: MockMvc) {
   @Test
   @Throws(Exception::class)
   @WithMockUser(username = "admin@admin.com", roles = arrayOf("ADMIN"))
-  fun testRemoverRegister() {
-    every { registerMockk.buscarPorId(idRegister) } returns obterDadosRegister()
-    every { registerMockk.remover(idRegister) } returns Unit
+  fun testRemoveRegister() {
+    every { registerMockk.searchById(idRegister) } returns getDadosRegister()
+    every { registerMockk.remove(idRegister) } returns Unit
 
     mvc.perform(MockMvcRequestBuilders.delete(urlBase + idRegister)
         .accept(MediaType.APPLICATION_JSON))
@@ -98,7 +98,7 @@ class RegisterControllerTest(@Autowired val mvc: MockMvc) {
   }
 
   @Throws(JsonProcessingException::class)
-  private fun obterJsonRequisicaoPost(): String {
+  private fun getJsonRequestPost(): String {
     val registerDto: RegisterDto = RegisterDto(
         data = dateFormat.format(data), type = type, descricao = "Descrição",
         localizacao = "1.234,4.234", employeeId = idEmployee)
@@ -106,7 +106,7 @@ class RegisterControllerTest(@Autowired val mvc: MockMvc) {
     return mapper.writeValueAsString(registerDto)
   }
 
-  private fun obterDadosRegister(): Register =
+  private fun getDadosRegister(): Register =
       Register(data = data, type = TipoEnum.valueOf(type), employeeId = idEmployee,
         descricao = "Descrição", localizacao = "1.243,4.345", id = idRegister)
 

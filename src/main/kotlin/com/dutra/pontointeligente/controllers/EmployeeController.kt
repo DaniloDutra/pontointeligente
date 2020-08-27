@@ -20,7 +20,7 @@ class EmployeeController(val employeeService: EmployeeService) {
                 result: BindingResult): ResponseEntity<Response<EmployeeDto>> {
 
     val response: Response<EmployeeDto> = Response<EmployeeDto>()
-    val employee: Employee? = employeeService.buscarPorId(id)
+    val employee: Employee? = employeeService.searchById(id)
 
     if (employee == null) {
       result.addError(ObjectError("employee", "Funcionário não encontrado."))

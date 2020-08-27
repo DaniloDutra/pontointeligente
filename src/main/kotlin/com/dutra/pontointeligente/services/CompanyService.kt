@@ -5,7 +5,7 @@ import com.dutra.pontointeligente.repositories.CompanyRepository
 
 interface CompanyService {
 
-  fun buscarPorCnpj(cnpj: String): Company?
+  fun searchByCnpj(cnpj: String): Company?
 
   fun peristir(company: Company): Company
 }

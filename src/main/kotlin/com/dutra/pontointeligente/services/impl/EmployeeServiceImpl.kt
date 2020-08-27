@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service
 class EmployeeServiceImpl(val employeeRepository: EmployeeRepository) : EmployeeService {
   override fun persistir(employee: Employee): Employee = employeeRepository.save(employee)
 
-  override fun buscarPorCpf(cpf: String): Employee? = employeeRepository.findByCpf(cpf)
+  override fun searchByCpf(cpf: String): Employee? = employeeRepository.findByCpf(cpf)
 
-  override fun buscarPorEmail(email: String): Employee? = employeeRepository.findByEmail(email)
+  override fun searchByEmail(email: String): Employee? = employeeRepository.findByEmail(email)
 
-  override fun buscarPorId(id: String): Employee? = employeeRepository.findByIdOrNull(id)
+  override fun searchById(id: String): Employee? = employeeRepository.findByIdOrNull(id)
 }

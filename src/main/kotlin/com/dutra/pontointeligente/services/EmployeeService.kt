@@ -6,9 +6,9 @@ interface EmployeeService {
 
   fun persistir(employee: Employee): Employee
 
-  fun buscarPorCpf(cpf: String): Employee?
+  fun searchByCpf(cpf: String): Employee?
 
-  fun buscarPorEmail(email: String): Employee?
+  fun searchByEmail(email: String): Employee?
 
-  fun buscarPorId(id: String): Employee?
+  fun searchById(id: String): Employee?
 }

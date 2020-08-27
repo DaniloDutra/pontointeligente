@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class RegisterServiceImpl(val registerRepository: RegisterRepository) : RegisterService {
-  override fun buscarPorEmployeeId(employeeId: String, pageRequest: PageRequest): Page<Register> =
+  override fun searchByEmployeeId(employeeId: String, pageRequest: PageRequest): Page<Register> =
       registerRepository.findByEmployeeId(employeeId, pageRequest)
 
-  override fun buscarPorId(id: String): Register? = registerRepository.findByIdOrNull(id)
+  override fun searchById(id: String): Register? = registerRepository.findByIdOrNull(id)
 
   override fun persistir(register: Register): Register = registerRepository.save(register)
 
-  override fun remover(id: String) = registerRepository.deleteById(id)
+  override fun remove(id: String) = registerRepository.deleteById(id)
 }
