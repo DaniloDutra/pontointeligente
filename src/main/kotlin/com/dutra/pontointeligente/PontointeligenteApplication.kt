@@ -5,7 +5,7 @@ import com.dutra.pontointeligente.documents.Employee
 import com.dutra.pontointeligente.enums.PerfilEnum
 import com.dutra.pontointeligente.repositories.CompanyRepository
 import com.dutra.pontointeligente.repositories.EmployeeRepository
-import com.dutra.pontointeligente.repositories.LancamentoRepository
+import com.dutra.pontointeligente.repositories.RegisterRepository
 import com.dutra.pontointeligente.utils.SenhaUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication

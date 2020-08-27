@@ -6,9 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
 @Document
-data class Lancamento (
+data class Register (
   val data: Date,
-  val tipo: TipoEnum,
+  val type: TipoEnum,
   val employeeId: String,
   val descricao: String? = "",
   val localizacao: String? = "",
